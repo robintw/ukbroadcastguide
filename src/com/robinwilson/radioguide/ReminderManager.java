@@ -1,6 +1,9 @@
 package com.robinwilson.radioguide;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import robinwilson.bbc.ScheduleItem;
@@ -23,10 +26,7 @@ public class ReminderManager {
 		
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(currentContext, 0, intent, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		
-		//Date currentTime = new Date();
-		
-		//Long difference = programme.getStart().getTime() - currentTime.getTime();
-		
+		// Five minutes before in milliseconds
 		Long preTimeInMS = (long) 5 * 60 * 1000;
 		
 		
@@ -34,6 +34,7 @@ public class ReminderManager {
 		
 		Long alarmTime = programme.getStart().getTime() + (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET));
 		
+		alarmTime = alarmTime - preTimeInMS;
 		
 		System.out.println(alarmTime);
 		
@@ -46,7 +47,17 @@ public class ReminderManager {
 		// FAKE code using now plus 10 seconds
 		//am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 10000, pendingIntent);
 		
-		Toast t = Toast.makeText(currentContext, "Alarm set for " + programme.getStartHHMMString(), Toast.LENGTH_LONG);
+		// Set the format that we want the output in
+		DateFormat out_sdf = new SimpleDateFormat("HH:mm");
+		
+		Date alarmDate = new Date();
+		
+		alarmDate.setTime(alarmTime);
+		
+		// Return the formatted string
+		String alarmTimeString = out_sdf.format(alarmDate);
+		
+		Toast t = Toast.makeText(currentContext, "Alarm set for " + alarmTimeString, Toast.LENGTH_LONG);
         t.show();
 	}
 }

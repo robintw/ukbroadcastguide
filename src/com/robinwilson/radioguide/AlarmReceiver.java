@@ -1,15 +1,11 @@
 package com.robinwilson.radioguide;
 
-import java.net.URI;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 
 public class AlarmReceiver extends BroadcastReceiver{
